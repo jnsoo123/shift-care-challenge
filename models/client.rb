@@ -20,6 +20,10 @@ class Client
     def find_duplicate_emails
       all.group_by(&:email).select { |_, clients| clients.size > 1 }
     end
+
+    def reset_data
+      @all = []
+    end
   end
 
   attr_reader :id, :name, :email
