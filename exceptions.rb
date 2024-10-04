@@ -1,4 +1,5 @@
 module Exceptions
-  class InvalidFile < RuntimeError; end;
-  class FilePathMissing < RuntimeError; end;
+  class InvalidFile < StandardError; end;
+  class FilePathMissing < StandardError; end;
+  class MissingArgument < StandardError; end;
 end

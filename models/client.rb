@@ -12,6 +12,8 @@ class Client
     end
 
     def search(search_term)
+      return [] if all.nil?
+
       all.select do |client|
         client.name =~ Regexp.new(search_term, Regexp::IGNORECASE)
       end

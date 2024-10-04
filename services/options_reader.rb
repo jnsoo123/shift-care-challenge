@@ -4,12 +4,31 @@ class OptionsReader
   attr_reader :filepath, :client_to_search, :find_duplicate_email
 
   def initialize
+    parse_options!
+    validate!
+  end
+
+  def print_raw_data
+    puts "Reading file: #{filepath}"
+    puts raw_data
+  end
+
+  def raw_data
+    @raw_data ||= FilePathToRawDataAdapter.call(filepath)
+  end
+
+  private
+
+  def validate!
+    raise Exceptions::FilePathMissing, 'File path is required' unless filepath
+  end
+
+  def parse_options!
     OptionParser.new do |parser|
       parser.banner = "Usage: 'ruby app.rb [options]'"
 
       parser.on('-f', '--file FILEPATH', 'File path to read') do |filepath|
         @filepath = filepath
-        Client.build_data(raw_data)
       end
 
       parser.on('-c', '--client NAME', 'Enter client name to search') do |name|
@@ -20,22 +39,7 @@ class OptionsReader
         @find_duplicate_email = true
       end
     end.parse!
-
-    validate!
-  end
-
-  def print_raw_data
-    puts "Reading file: #{filepath}"
-    puts raw_data
-  end
-
-  private
-
-  def validate!
-    raise Exceptions::FilePathMissing, 'File path is required' unless filepath
-  end
-
-  def raw_data
-    @raw_data ||= FilePathToRawDataAdapter.call(filepath)
+  rescue OptionParser::MissingArgument => _e
+    raise Exceptions::MissingArgument, 'File path is required'
   end
 end
