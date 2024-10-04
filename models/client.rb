@@ -29,4 +29,12 @@ class Client
     @name  = data['full_name']
     @email = data['email']
   end
+
+  def to_json
+    {
+      id: id,
+      name: name,
+      email: email
+    }.to_json
+  end
 end

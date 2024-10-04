@@ -29,13 +29,13 @@ class OptionsReader
     puts raw_data
   end
 
-  def raw_data
-    @raw_data ||= FilePathToRawDataAdapter.call(filepath)
-  end
-
   private
 
   def validate
     raise ArgumentError, 'File path is required' unless filepath
+  end
+
+  def raw_data
+    @raw_data ||= FilePathToRawDataAdapter.call(filepath)
   end
 end

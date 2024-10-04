@@ -40,7 +40,7 @@ class App
     puts 'Duplicate emails found:'
     duplicates.each do |email, clients|
       puts "Email: #{email}"
-      clients.each { |client| puts client.inspect }
+      clients.each { |client| puts client.to_json }
       puts '---------------------------------'
     end
   end
@@ -61,7 +61,7 @@ class App
 
     puts "Number of clients found: #{clients.count}"
     puts '---------------------------------'
-    clients.each { |client| puts client.inspect }
+    clients.each { |client| puts client.to_json }
   end
 end
 
