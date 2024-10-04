@@ -6,6 +6,9 @@ class App
   rescue Exceptions::InvalidFile => e
     puts e.message
     exit(1) unless defined?(Minitest)
+  rescue Exceptions::FilePathMissing => e
+    puts e.message
+    exit(1) unless defined?(Minitest)
   end
 
   def initialize

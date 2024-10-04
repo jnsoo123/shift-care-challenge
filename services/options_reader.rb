@@ -21,7 +21,7 @@ class OptionsReader
       end
     end.parse!
 
-    validate
+    validate!
   end
 
   def print_raw_data
@@ -31,8 +31,8 @@ class OptionsReader
 
   private
 
-  def validate
-    raise ArgumentError, 'File path is required' unless filepath
+  def validate!
+    raise Exceptions::FilePathMissing, 'File path is required' unless filepath
   end
 
   def raw_data
