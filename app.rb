@@ -3,6 +3,9 @@ require_relative 'init'
 class App
   def self.execute
     new.perform
+  rescue Exceptions::InvalidFile => e
+    puts e.message
+    exit(1) unless defined?(Minitest)
   end
 
   def initialize
