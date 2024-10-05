@@ -1,6 +1,6 @@
 require_relative 'init'
 
-begin
+def run_app
   # ARGV.replace(['-p', 'clients.json'])
 
   parser   = Options::Parser.new
@@ -9,10 +9,10 @@ begin
   AppRunner.run(parser, raw_data)
 rescue Exceptions::InvalidFile => e
   puts e.message
-rescue Exceptions::FilePathMissing => e
-  puts e.message
 rescue Exceptions::ValidationError => e
   puts e.message
 rescue Exceptions::MissingArgument => e
   puts e.message
 end
+
+run_app
