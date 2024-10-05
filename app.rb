@@ -1,9 +1,12 @@
 require_relative 'init'
 
 begin
-  reader = Options::Reader.new
+  # ARGV.replace(['-p', 'clients.json'])
 
-  CommandLineRunner.run(reader)
+  parser   = Options::Parser.new
+  raw_data = Options::ObjectBuilder.call(parser)
+
+  CommandLineRunner.run(parser, raw_data)
 rescue Exceptions::InvalidFile => e
   puts e.message
   exit(1) unless defined?(Minitest)
