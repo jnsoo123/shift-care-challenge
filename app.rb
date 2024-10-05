@@ -10,10 +10,10 @@ rescue Exceptions::InvalidFile => e
 rescue Exceptions::FilePathMissing => e
   puts e.message
   exit(1) unless defined?(Minitest)
-rescue Exceptions::MissingArgument => e
+rescue Exceptions::ValidationError => e
   puts e.message
   exit(1) unless defined?(Minitest)
-rescue Exceptions::InvalidField => e
+rescue Exceptions::MissingArgument => e
   puts e.message
   exit(1) unless defined?(Minitest)
 end

@@ -1,3 +1,5 @@
+require 'optparse'
+
 module Options
   class Reader
     attr_reader :filepath, :field_to_search, :search_term, :field_to_search_duplicate, :raw_data, :objects

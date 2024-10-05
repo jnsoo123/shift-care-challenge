@@ -18,14 +18,14 @@ module Options
     def validate_search!
       return unless @reader.field_to_search
 
-      raise Exceptions::InvalidField, "Field '#{@reader.field_to_search}' is invalid" unless valid_field?(@reader.field_to_search)
-      raise Exceptions::MissingArgument, "Search term is required (e.g. -f #{@reader.field_to_search}=search_term)" unless @reader.search_term
+      raise Exceptions::ValidationError, "Field '#{@reader.field_to_search}' is invalid" unless valid_field?(@reader.field_to_search)
+      raise Exceptions::ValidationError, "Search term is required (e.g. -f #{@reader.field_to_search}=search_term)" unless @reader.search_term
     end
 
     def validate_duplicate_field!
       return unless @reader.field_to_search_duplicate
 
-      raise Exceptions::InvalidField, "Field '#{@reader.field_to_search_duplicate}' is invalid" unless valid_field?(@reader.field_to_search_duplicate)
+      raise Exceptions::ValidationError, "Field '#{@reader.field_to_search_duplicate}' is invalid" unless valid_field?(@reader.field_to_search_duplicate)
     end
 
     def valid_field?(field)
