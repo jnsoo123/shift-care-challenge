@@ -43,18 +43,14 @@ class CommandLineRunner
       return
     end
 
-    puts "Duplicate #{@reader.field_to_search_duplicate} found:"
-    duplicates.each do |field, objects|
-      puts "Field: #{field}"
-      objects.each { |object| puts object.to_json }
+    duplicates.each do |value, objects|
+      puts "Duplicate #{@reader.field_to_search_duplicate}='#{value}' found:"
+      objects.each { |object| puts object.to_h.to_json }
       puts '---------------------------------'
     end
   end
 
   def search_objects
-    puts "Searching for #{@reader.field_to_search}: #{@reader.search_term}"
-    puts '---------------------------------'
-
     objects = Options::Search.call(@reader)
 
     if objects.empty?
@@ -63,8 +59,10 @@ class CommandLineRunner
       return
     end
 
+    puts "Searching for #{@reader.field_to_search}: #{@reader.search_term}"
     puts "Number of objects found: #{objects.count}"
     puts '---------------------------------'
     objects.each { |object| puts object.to_h.to_json }
+    puts '---------------------------------'
   end
 end
