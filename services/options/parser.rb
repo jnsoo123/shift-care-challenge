@@ -12,7 +12,7 @@ module Options
           @filepath = param
         end
 
-        parser.on('-f', '--find FIELD=VALUE', 'Specify field and value to search (e.g. --find name=John') do |param|
+        parser.on('-f', '--find FIELD=VALUE', 'Specify field and value to search (e.g. --find name=John)') do |param|
           @search_field, @search_value = param.split('=')
         end
 
