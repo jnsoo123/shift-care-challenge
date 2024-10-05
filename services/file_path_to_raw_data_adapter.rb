@@ -11,9 +11,11 @@ class FilePathToRawDataAdapter
 
   def adapt
     @raw_data ||= JSON.parse(File.read(@filepath))
-  rescue Errno::ENOENT => e
+  rescue Errno::ENOENT => _e
     raise Exceptions::InvalidFile, 'File not found'
-  rescue JSON::ParserError => e
+  rescue JSON::ParserError => _e
     raise Exceptions::InvalidFile, 'Invalid JSON file'
+  rescue TypeError => _e
+    raise Exceptions::InvalidFile, 'File not found'
   end
 end

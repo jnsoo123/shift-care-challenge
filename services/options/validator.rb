@@ -9,18 +9,11 @@ module Options
     end
 
     def perform
-      validate_filepath!
       validate_search!
       validate_duplicate_field!
     end
 
     private
-
-    def validate_filepath!
-      return unless @reader.filepath
-
-      raise Exceptions::FilePathMissing, 'File path is required' unless @reader.filepath
-    end
 
     def validate_search!
       return unless @reader.field_to_search

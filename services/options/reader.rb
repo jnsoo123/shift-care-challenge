@@ -4,8 +4,10 @@ module Options
 
     def initialize
       parse_options!
-      @raw_data = ::FilePathToRawDataAdapter.call(filepath)
-      build_objects
+
+      @raw_data = build_raw_data
+      @objects = build_objects
+
       validate!
     end
 
@@ -36,7 +38,11 @@ module Options
     end
 
     def build_objects
-      @objects ||= raw_data.map { |data| OpenStruct.new(data) }
+      raw_data.map { |data| OpenStruct.new(data) }
+    end
+
+    def build_raw_data
+      ::FilePathToRawDataAdapter.call(filepath)
     end
   end
 end
