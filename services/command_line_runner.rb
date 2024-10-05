@@ -15,7 +15,7 @@ class CommandLineRunner
       search_objects
     end
 
-    if @reader.find_duplicate_email
+    if @reader.field_to_search_duplicate
       find_duplicate_emails
     end
   end
@@ -23,7 +23,9 @@ class CommandLineRunner
   private
 
   def execute_default?
-    @reader.field_to_search.nil? && @reader.search_term.nil? && @reader.find_duplicate_email.nil?
+    @reader.field_to_search.nil? &&
+      @reader.search_term.nil? &&
+      @reader.field_to_search_duplicate.nil?
   end
 
   def print_raw_data
@@ -32,18 +34,19 @@ class CommandLineRunner
   end
 
   def find_duplicate_emails
-    duplicates = Client.find_duplicate_emails
+    duplicates = Options::SearchDuplicate.call(@reader)
+
 
     if duplicates.empty?
-      puts 'No duplicate emails found'
+      puts "No duplicate #{@reader.field_to_search_duplicate} found"
 
       return
     end
 
-    puts 'Duplicate emails found:'
-    duplicates.each do |email, clients|
-      puts "Email: #{email}"
-      clients.each { |client| puts client.to_json }
+    puts "Duplicate #{@reader.field_to_search_duplicate} found:"
+    duplicates.each do |field, objects|
+      puts "Field: #{field}"
+      objects.each { |object| puts object.to_json }
       puts '---------------------------------'
     end
   end

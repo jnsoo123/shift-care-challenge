@@ -1,6 +1,6 @@
 module Options
   class Reader
-    attr_reader :filepath, :field_to_search, :search_term, :find_duplicate_email, :raw_data, :objects
+    attr_reader :filepath, :field_to_search, :search_term, :field_to_search_duplicate, :raw_data, :objects
 
     def initialize
       parse_options!
@@ -19,20 +19,20 @@ module Options
       OptionParser.new do |parser|
         parser.banner = "Usage: 'ruby app.rb [options]'"
 
-        parser.on('-p', '--path FILEPATH', 'File path to read') do |filepath|
-          @filepath = filepath
+        parser.on('-p', '--path FILEPATH', 'File path to read') do |param|
+          @filepath = param
         end
 
         parser.on('-f', '--find FIELD=VALUE', 'Specify field and value to search (e.g. --find name=John') do |param|
           @field_to_search, @search_term = param.split('=')
         end
 
-        parser.on('-d', '--duplicate-email', 'Find duplicate emails') do
-          @find_duplicate_email = true
+        parser.on('-d', '--find-duplicate FIELD', 'Find duplicate') do |param|
+          @field_to_search_duplicate = param
         end
       end.parse!
-    rescue OptionParser::MissingArgument => _e
-      raise Exceptions::MissingArgument, 'File path is required'
+    rescue OptionParser::MissingArgument => e
+      raise Exceptions::MissingArgument, e.message
     end
 
     def build_objects
