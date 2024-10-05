@@ -26,6 +26,7 @@ module Options
       return unless @reader.field_to_search
 
       raise Exceptions::InvalidField, "Field '#{@reader.field_to_search}' is invalid" unless valid_field?(@reader.field_to_search)
+      raise Exceptions::MissingArgument, "Search term is required (e.g. -f #{@reader.field_to_search}=search_term)" unless @reader.search_term
     end
 
     def validate_duplicate_field!

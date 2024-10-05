@@ -52,7 +52,7 @@ class CommandLineRunner
   end
 
   def search_objects
-    puts "Searching for object: #{@reader.search_term}"
+    puts "Searching for #{@reader.field_to_search}: #{@reader.search_term}"
     puts '---------------------------------'
 
     objects = Options::Search.call(@reader)
