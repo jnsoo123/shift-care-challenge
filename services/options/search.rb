@@ -11,7 +11,9 @@ module Options
     end
 
     def perform
-      @objects.select { |object| object.send(@field) =~ Regexp.new(@search_term, Regexp::IGNORECASE) }
+      @objects.select do |object|
+        object.send(@field).to_s =~ Regexp.new(@search_term.to_s, Regexp::IGNORECASE)
+      end
     end
   end
 end

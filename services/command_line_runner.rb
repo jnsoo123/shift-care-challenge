@@ -9,7 +9,7 @@ class CommandLineRunner
 
   def perform
     # executed by default
-    return print_raw_data unless @reader.field_to_search || @reader.search_term || @reader.find_duplicate_email
+    return print_raw_data if execute_default?
 
     if @reader.field_to_search && @reader.search_term
       search_objects
@@ -21,6 +21,10 @@ class CommandLineRunner
   end
 
   private
+
+  def execute_default?
+    @reader.field_to_search.nil? && @reader.search_term.nil? && @reader.find_duplicate_email.nil?
+  end
 
   def print_raw_data
     puts "Reading file: #{@reader.filepath}"
