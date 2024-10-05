@@ -1,4 +1,4 @@
-class CommandLineRunner
+class AppRunner
   def self.run(reader, raw_data)
     new(reader, raw_data).perform
   end
@@ -17,7 +17,7 @@ class CommandLineRunner
     # executed by default
     return print_raw_data if execute_default?
 
-    if @search_field && @search_value
+    if @search_field || @search_value
       search_objects
     end
 
@@ -36,40 +36,40 @@ class CommandLineRunner
 
   def print_raw_data
     puts "Reading file: #{@filepath}"
-    @objects.each { |object| puts object.to_h.to_json }
+    @raw_data.each { |datum| puts datum }
   end
 
   def search_objects
     options = { search_field: @search_field, search_value: @search_value }
-    objects = Options::Search::Matcher.call(@raw_data, options)
+    results = Options::Search::Matcher.call(@raw_data, options)
 
-    if objects.empty?
+    if results.empty?
       puts 'Object not found'
 
       return
     end
 
     puts "Searching for #{@search_field}: #{@search_value}"
-    puts "Number of objects found: #{objects.count}"
+    puts "Number of objects found: #{results.count}"
     puts '---------------------------------'
-    objects.each { |object| puts object.to_h.to_json }
+    results.each { |result| puts result }
     puts '---------------------------------'
   end
 
   def find_duplicates
     options = { search_field_duplicate: @search_field_duplicate }
-    duplicates = Options::Search::Duplicate.call(@raw_data, options)
+    results = Options::Search::Duplicate.call(@raw_data, options)
 
 
-    if duplicates.empty?
+    if results.empty?
       puts "No duplicate #{@search_field_duplicate} found"
 
       return
     end
 
-    duplicates.each do |value, objects|
+    results.each do |value, raw_data|
       puts "Duplicate #{@search_field_duplicate}='#{value}' found:"
-      objects.each { |object| puts object.to_h.to_json }
+      raw_data.each { |datum| puts datum }
       puts '---------------------------------'
     end
   end
