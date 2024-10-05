@@ -9,8 +9,8 @@ module Options
       private
 
       def perform_search
-        @objects.group_by { |obj| obj[@field] }.select do |_, objects|
-          objects.size > 1
+        @objects.group_by { |obj| obj[@field] }.select do |value, objects|
+          objects.size > 1 && !value.nil?
         end
       end
 

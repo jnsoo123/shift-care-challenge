@@ -15,6 +15,17 @@ module Options
             'name' => 'John Doe'
           }
         ]
+
+        @raw_data_with_null_values = [
+          {
+            'id' => 123,
+            'name' => nil
+          },
+          {
+            'id' => 456,
+            'name' => nil
+          }
+        ]
       end
 
       class WhenThereAreValidationErrors < DuplicateTest
@@ -51,6 +62,13 @@ module Options
         def test_return_nothing_when_no_duplicates_found
           options = { search_field_duplicate: 'id' }
           results = Options::Search::Duplicate.call(@raw_data, options)
+
+          assert_empty results
+        end
+
+        def test_return_nothing_when_field_value_is_nil
+          options = { search_field_duplicate: 'name' }
+          results = Options::Search::Duplicate.call(@raw_data_with_null_values, options)
 
           assert_empty results
         end
