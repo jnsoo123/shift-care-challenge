@@ -9,9 +9,9 @@ class CommandLineRunner
 
   def perform
     # executed by default
-    return @reader.print_raw_data unless @reader.client_to_search || @reader.find_duplicate_email
+    return @reader.print_raw_data unless @reader.field_to_search || @reader.search_term || @reader.find_duplicate_email
 
-    if @reader.client_to_search
+    if @reader.field_to_search && @reader.search_term
       search_clients
     end
 
@@ -40,12 +40,13 @@ class CommandLineRunner
   end
 
   def search_clients
-    search_term = @reader.client_to_search
+    field = @reader.field_to_search
+    search_term = @reader.search_term
 
     puts "Searching for client: #{search_term}"
     puts '---------------------------------'
 
-    clients = Client.search(search_term)
+    clients = Client.search(field, search_term)
 
     if clients.empty?
       puts 'Client not found'

@@ -11,11 +11,13 @@ class Client
       end
     end
 
-    def search(search_term)
+    def search(field, search_term)
       return [] if all.nil?
 
+      field = field.downcase
+
       all.select do |client|
-        client.name =~ Regexp.new(search_term, Regexp::IGNORECASE)
+        client.send(field) =~ Regexp.new(search_term, Regexp::IGNORECASE)
       end
     end
 
@@ -28,18 +30,18 @@ class Client
     end
   end
 
-  attr_reader :id, :name, :email
+  attr_reader :id, :full_name, :email
 
   def initialize(data)
-    @id    = data['id']
-    @name  = data['full_name']
-    @email = data['email']
+    @id        = data['id']
+    @full_name = data['full_name']
+    @email     = data['email']
   end
 
   def to_json
     {
       id: id,
-      name: name,
+      full_name: full_name,
       email: email
     }.to_json
   end

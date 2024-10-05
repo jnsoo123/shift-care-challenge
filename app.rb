@@ -15,4 +15,7 @@ rescue Exceptions::FilePathMissing => e
 rescue Exceptions::MissingArgument => e
   puts e.message
   exit(1) unless defined?(Minitest)
+rescue Exceptions::InvalidField => e
+  puts e.message
+  exit(1) unless defined?(Minitest)
 end

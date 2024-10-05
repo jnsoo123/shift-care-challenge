@@ -8,7 +8,7 @@ class TestCommandLineRunner < Minitest::Test
 
   # #run
   def test_run_with_default_output
-    ARGV.replace(['-f', 'tests/fixtures/test_clients.json'])
+    ARGV.replace(['-p', 'tests/fixtures/test_clients.json'])
 
     reader = OptionsReader.new
     assert_output(/Reading file: tests\/fixtures\/test_clients.json/) { reader.print_raw_data }
@@ -19,7 +19,7 @@ class TestCommandLineRunner < Minitest::Test
   def test_run_with_client_to_search
     Client.build_data(data)
 
-    ARGV.replace(['-f', 'tests/fixtures/test_clients.json', '-c', 'John'])
+    ARGV.replace(['-p', 'tests/fixtures/test_clients.json', '-f', 'full_name=John'])
 
     reader = OptionsReader.new
     assert_output(/Searching for client: John/) { CommandLineRunner.run(reader) }
@@ -29,7 +29,7 @@ class TestCommandLineRunner < Minitest::Test
   def test_run_with_client_to_search_with_no_data
     Client.build_data(data)
 
-    ARGV.replace(['-f', 'tests/fixtures/test_clients.json', '-c', 'Someone'])
+    ARGV.replace(['-p', 'tests/fixtures/test_clients.json', '-f', 'full_name=Someone'])
 
     reader = OptionsReader.new
     assert_output(/Searching for client: Someone/) { CommandLineRunner.run(reader) }
@@ -39,7 +39,7 @@ class TestCommandLineRunner < Minitest::Test
   def test_run_with_find_duplicate_email
     Client.build_data(data_with_duplicate_email)
 
-    ARGV.replace(['-f', 'tests/fixtures/test_clients.json', '-d'])
+    ARGV.replace(['-p', 'tests/fixtures/test_clients.json', '-d'])
 
     reader = OptionsReader.new
     assert_output(/Duplicate emails found:/) { CommandLineRunner.run(reader) }

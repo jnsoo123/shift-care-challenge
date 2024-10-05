@@ -4,7 +4,7 @@ require_relative '../../init'
 class TestOptionsReader < Minitest::Test
   # #print_raw_data
   def test_print_raw_data
-    ARGV.replace(['-f', 'tests/fixtures/test_clients.json'])
+    ARGV.replace(['-p', 'tests/fixtures/test_clients.json'])
 
     reader = OptionsReader.new
     assert_output(/Reading file: tests\/fixtures\/test_clients.json/) { reader.print_raw_data }

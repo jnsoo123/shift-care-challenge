@@ -12,7 +12,7 @@ class TestClient < Minitest::Test
 
     expected_json = {
       id: 123,
-      name: 'John Doe',
+      full_name: 'John Doe',
       email: 'john.doe@example.com'
     }.to_json
     assert_equal expected_json, client.to_json
@@ -30,20 +30,20 @@ class TestClient < Minitest::Test
   def test_self_search_with_no_data
     Client.build_data([datum])
 
-    assert_equal [], ::Client.search('Someone')
+    assert_equal [], ::Client.search('full_name', 'Someone')
   end
 
   def test_self_search_with_one_datum
     Client.build_data([datum])
 
-    assert_equal 123, ::Client.search('John').first.id
+    assert_equal 123, ::Client.search('full_name', 'John').first.id
   end
 
   def test_self_search_with_two_data
     Client.build_data(data)
     assert_equal 2, ::Client.all.size
 
-    clients = Client.search('j')
+    clients = Client.search('full_name', 'j')
     assert_equal 123, clients.first.id
     assert_equal 456, clients.last.id
   end
@@ -52,7 +52,7 @@ class TestClient < Minitest::Test
     Client.build_data([datum])
     assert_equal 1, ::Client.all.size
 
-    clients = ::Client.search('doe')
+    clients = ::Client.search('full_name', 'doe')
     assert_equal 123, clients.first.id
     assert_equal 1, clients.size
   end
@@ -61,7 +61,7 @@ class TestClient < Minitest::Test
     Client.build_data([datum])
     assert_equal 1, ::Client.all.size
 
-    clients = ::Client.search('DOE')
+    clients = ::Client.search('full_name', 'DOE')
     assert_equal 123, clients.first.id
     assert_equal 1, clients.size
   end

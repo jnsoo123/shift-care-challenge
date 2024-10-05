@@ -1,7 +1,7 @@
 require 'optparse'
 
 class OptionsReader
-  attr_reader :filepath, :client_to_search, :find_duplicate_email
+  attr_reader :filepath, :field_to_search, :search_term, :find_duplicate_email
 
   def initialize
     parse_options!
@@ -27,12 +27,12 @@ class OptionsReader
     OptionParser.new do |parser|
       parser.banner = "Usage: 'ruby app.rb [options]'"
 
-      parser.on('-f', '--file FILEPATH', 'File path to read') do |filepath|
+      parser.on('-p', '--path FILEPATH', 'File path to read') do |filepath|
         @filepath = filepath
       end
 
-      parser.on('-c', '--client NAME', 'Enter client name to search') do |name|
-        @client_to_search = name
+      parser.on('-f', '--find FIELD=VALUE', 'Specify field and value to search (e.g. --find name=John') do |param|
+        @field_to_search, @search_term = param.split('=')
       end
 
       parser.on('-d', '--duplicate-email', 'Find duplicate emails') do
