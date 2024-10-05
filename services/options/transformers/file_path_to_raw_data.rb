@@ -18,7 +18,7 @@ module Options
       rescue JSON::ParserError => _e
         raise Exceptions::InvalidFile, 'Invalid JSON file'
       rescue TypeError => _e
-        raise Exceptions::InvalidFile, 'File not found'
+        raise Exceptions::InvalidFile, 'Please enter a file (e.g. ruby app.rb -p filepath)'
       end
 
       def parse_to_array_of_hashes
