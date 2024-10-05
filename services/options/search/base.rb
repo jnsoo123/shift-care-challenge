@@ -25,6 +25,10 @@ module Options
       def valid_fields
         @objects.map(&:keys).flatten.uniq
       end
+
+      def invalid_field_message
+        "Field '#{@field}' is invalid. Valid fields are #{valid_fields.join(', ')}"
+      end
     end
   end
 end

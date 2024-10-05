@@ -17,7 +17,7 @@ module Options
       def validate!
         return unless @field
 
-        raise Exceptions::ValidationError, "Field '#{@field}' is invalid" unless valid_field?
+        raise Exceptions::ValidationError, invalid_field_message unless valid_field?
       end
     end
   end

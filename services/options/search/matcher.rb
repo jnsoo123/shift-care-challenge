@@ -16,7 +16,7 @@ module Options
       end
 
       def validate!
-        raise Exceptions::ValidationError, "Field '#{@field}' is invalid" unless valid_field?
+        raise Exceptions::ValidationError, invalid_field_message unless valid_field?
         raise Exceptions::ValidationError, "Search term is required (e.g. -f #{@field}=search_term)" unless @value
       end
     end

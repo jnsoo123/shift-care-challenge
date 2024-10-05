@@ -4,7 +4,7 @@ def run_app
   # ARGV.replace(['-p', 'clients.json'])
 
   if ARGV.empty?
-    puts 'Please provide arguments. Run ruby app.rb -h for help'
+    puts 'Please provide arguments. Run `ruby app.rb -h` for help'
     exit(1)
   end
 
