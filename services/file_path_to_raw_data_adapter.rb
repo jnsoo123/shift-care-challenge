@@ -5,11 +5,8 @@ class FilePathToRawDataAdapter
     new(filepath).adapt
   end
 
-  attr_reader :clients
-
   def initialize(filepath)
     @filepath = filepath
-    @clients = []
   end
 
   def adapt

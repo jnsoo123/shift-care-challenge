@@ -1,9 +1,7 @@
 require_relative 'init'
 
 begin
-  reader = OptionsReader.new
-
-  Client.build_data(reader.raw_data)
+  reader = Options::Reader.new
 
   CommandLineRunner.run(reader)
 rescue Exceptions::InvalidFile => e

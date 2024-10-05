@@ -9,10 +9,10 @@ class CommandLineRunner
 
   def perform
     # executed by default
-    return @reader.print_raw_data unless @reader.field_to_search || @reader.search_term || @reader.find_duplicate_email
+    return print_raw_data unless @reader.field_to_search || @reader.search_term || @reader.find_duplicate_email
 
     if @reader.field_to_search && @reader.search_term
-      search_clients
+      search_objects
     end
 
     if @reader.find_duplicate_email
@@ -21,6 +21,11 @@ class CommandLineRunner
   end
 
   private
+
+  def print_raw_data
+    puts "Reading file: #{@reader.filepath}"
+    puts @reader.raw_data
+  end
 
   def find_duplicate_emails
     duplicates = Client.find_duplicate_emails
@@ -39,23 +44,20 @@ class CommandLineRunner
     end
   end
 
-  def search_clients
-    field = @reader.field_to_search
-    search_term = @reader.search_term
-
-    puts "Searching for client: #{search_term}"
+  def search_objects
+    puts "Searching for object: #{@reader.search_term}"
     puts '---------------------------------'
 
-    clients = Client.search(field, search_term)
+    objects = Options::Search.call(@reader)
 
-    if clients.empty?
-      puts 'Client not found'
+    if objects.empty?
+      puts 'Object not found'
 
       return
     end
 
-    puts "Number of clients found: #{clients.count}"
+    puts "Number of objects found: #{objects.count}"
     puts '---------------------------------'
-    clients.each { |client| puts client.to_json }
+    objects.each { |object| puts object.to_h.to_json }
   end
 end
