@@ -1,6 +1,6 @@
 class AppRunner
-  def self.run(reader, raw_data)
-    new(reader, raw_data).perform
+  def self.run(parser, raw_data)
+    new(parser, raw_data).perform
   end
 
   def initialize(parser, raw_data)
@@ -59,7 +59,6 @@ class AppRunner
   def find_duplicates
     options = { search_field_duplicate: @search_field_duplicate }
     results = Options::Search::Duplicate.call(@raw_data, options)
-
 
     if results.empty?
       puts "No duplicate #{@search_field_duplicate} found"
