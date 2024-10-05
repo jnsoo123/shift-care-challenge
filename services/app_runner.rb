@@ -14,16 +14,10 @@ class AppRunner
   end
 
   def perform
-    # executed by default
     return print_raw_data if execute_default?
 
-    if @search_field || @search_value
-      search_objects
-    end
-
-    if @search_field_duplicate
-      find_duplicates
-    end
+    search_objects if @search_field || @search_value
+    find_duplicates if @search_field_duplicate
   end
 
   private
